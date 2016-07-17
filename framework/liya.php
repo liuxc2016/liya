@@ -7,6 +7,11 @@
 	class Framework{
 		public static $app;
 
+		public function __construct()
+		{
+			self::$app = $this;
+		}
+		
 		public static function run()
 		{
 			self::init();
@@ -35,7 +40,7 @@
 			define('VIEW_PATH', MODULE_PATH.'views'.DS);
 
 			define('COMMON_VIEW', VIEW_PATH.'common'.DS);
-			define('ACTION_VIEW', VIEW_PATH.CONTROLLER_NAME.DS.ACTION_NAME."html");
+			define('ACTION_VIEW', VIEW_PATH.CONTROLLER_NAME.DS.ACTION_NAME.".html");
 
 			session_start();
 

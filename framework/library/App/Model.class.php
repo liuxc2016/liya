@@ -11,6 +11,7 @@
 		private $dbPass;
 		private $dbUser;
 		private $lastSql;
+		private $data;
 
 		public function __construct($tableName){
 			$this->tableName = $tableName;
@@ -46,6 +47,44 @@
 
 			$this->lastSql = "SELECT * FROM ".$this->tableName;
 			return($sth->fetchAll());
+		}
+
+		public function findByOpenid($openid)
+		{
+			
+
+			$sql = 'SELECT * FROM '.$this->tableName.' WHERE openid = :openid';
+			$sth = self::$connection->prepare($sql);
+			$where = array("openid" => $openid );
+			$sth->execute($where);
+			$this->lastSql = "SELECT * FROM ".$this->tableName;
+			return($sth->fetchAll());
+		}
+
+		public function data($data)
+		{
+			$this->data = $data;
+			return $this;
+		}
+
+		public function add()
+		{
+			$fields = "" ;
+			$values = "" ;
+			foreach ($this->data as $key => $value)
+			{
+				$fields .= '`'.$key . '`' . ",";	
+				$values .= "'".$value . "',";
+			}
+			$fields = rtrim($fields , ",");
+			$values = rtrim($values , ",");
+			$sql = "INSERT INTO `".$this->tableName."`(".$fields.") VALUES (".$values.")";
+			
+			// dd($sql);
+			$count = self::$connection->exec($sql);
+			
+			$this->lastSql = $sql;
+			return $count;
 		}
 
 	}

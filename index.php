@@ -7,5 +7,7 @@
 	// echo LIYA_ROOT;
 	require LIYA_ROOT."/liya.php" ;
 
+	$arr = array();
+	
 	$app = new \App\Framework();
 	$app::run();
