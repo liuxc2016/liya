@@ -5,15 +5,20 @@
 		public function index()
 		{
 			echo "this is from home/index/index";
-			$model = M("test");
-			$result = $model->getAll();
-			// dd($result);
-			// $this->display("index.hello");
+
 
 			$this->assign("name" , "Liya");
 			$this->assign("title" , "is good");
 
-			$this->display("index.index");
-			// E("525");
+			$this->display("index");
+
+		}
+		public function pndex()
+		{
+			$model = M("users");
+			$users = $model->getAll();
+			$this->assign("name", 123);
+			$this->assign("users", $users);
+			$this->display("index.pndex");
 		}
 	}

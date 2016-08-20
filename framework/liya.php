@@ -3,10 +3,10 @@
 
 	// defined(APP_ROOT)  or die("没有定义项目根目录");
 	// defined(LIYA_ROOT) or die("没有定义liya根目录");
-	
 	class Framework{
 		public static $app;
-
+		public static $config;
+		
 		public function __construct()
 		{
 			self::$app = $this;
@@ -43,9 +43,17 @@
 			define('ACTION_VIEW', VIEW_PATH.CONTROLLER_NAME.DS.ACTION_NAME.".html");
 
 			session_start();
-
+			require_once(ROOT."vendor\autoload.php");
 			require_once(COMMON_PATH."function.php");
+			//echo ROOT;die;
+			
+			//读取配置文件
+			self::$config = include(APP_PATH."conf/app.php");
 
+			//注册错误处理
+			$whoops = new \Whoops\Run;
+			$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+			$whoops->register();
 		}
 
 		private static function registerAutoload()
@@ -60,15 +68,21 @@
 						// exit($target."在$target中找不到控制器".$class_name);
 					}
 				}elseif(strpos($class_name , "Model")){
+
 					$target = MODEL_PATH."$class_name.class.php";
 					if(is_file($target)){
 						require_once $target;
 					}else{
 						require_once LIBRARY_PATH."$class_name.class.php";
 						// exit($target."在$target中找不到控制器".$class_name);
-					}
+					}					
+					
 				}else{
-					require_once LIBRARY_PATH."$class_name.class.php";
+					if(is_file(require_once LIBRARY_PATH."$class_name.class.php")){
+						require_once LIBRARY_PATH."$class_name.class.php";
+					}else{
+						return false;
+					}
 				}
 				
 			});
@@ -94,7 +108,7 @@
 			$m = isset($_GET['m'])?$_GET['m'] : 'home' ;
 			$c = isset($_GET['c'])?$_GET['c'] : 'index';
 			$a = isset($_GET['a'])?$_GET['a'] : 'index';
-			return [$m , $c, $a ];
+			return array($m , $c, $a );
 		}
 
 	}

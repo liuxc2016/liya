@@ -5,7 +5,7 @@
 	<title>Documents</title>
 </head>
 <body>
-	hahah its html5;
-	{$name} : {$title}
+	hahah its html5ss;
+	{{$name}}
 </body>
 </html>

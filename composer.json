@@ -1,0 +1,26 @@
+{
+    "name": "liuxc/liya",
+    "description": "a php framework",
+    "type": "framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "liuxc",
+            "email": "lxchth2003@gmail.com"
+        }
+    ],
+    "require": {
+        "filp/whoops": "*",
+        "symfony/var-dumper": "^3.1",
+        "duncan3dc/blade": "^3.2",
+        "league/flysystem": "^1.0",
+        "illuminate/database": "^5.2"
+    },
+
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
