@@ -2,43 +2,27 @@
 
 	namespace App;
 	use Illuminate\Database\Capsule\Manager as Capsule;
-	class Model{
+	use Illuminate\Database\Eloquent\Model as Eloquent;
+	class Model extends Eloquent{
 
-		private static $connection;
-
-		private $lastSql;
-		private $data;
-		private $capsule;
+		protected $table;
+		protected $connection;
+		protected $capsule;
 
 		public function __construct($tableName){
-				$this->capsule = new Capsule;
-				$this->capsule->addConnection(getConfig("database"));
-				$this->capsule->setAsGlobal();
-				$this->tableName = $tableName;
-		}
-		public function getDb(){
-			return $this->$capsule;
-		}
-		public function getAll()
-		{
-			return Capsule::select('select * from '.$this->tableName);
-		}
 
-		public function findByOpenid($openid)
-		{
+			$this->capsule = new Capsule;
+			$this->capsule->addConnection(getConfig("database"));
+			$this->capsule->setAsGlobal();
+			$this->capsule->setAsGlobal();
+
+			// Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
+			$this->capsule->bootEloquent();
+
+			$this->table = $tableName;
+			//dd(getConfig("mysql"));
+			parent::__construct(getConfig("mysql"));
+		}
 		
-
-		}
-
-		public function data($data)
-		{
-			$this->data = $data;
-			return $this;
-		}
-
-		public function add()
-		{
-
-		}
 
 	}
